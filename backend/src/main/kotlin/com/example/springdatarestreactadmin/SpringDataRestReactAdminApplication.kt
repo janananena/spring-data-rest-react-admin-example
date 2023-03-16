@@ -1,4 +1,4 @@
-package com.example.springDataRestReactAdmin
+package com.example.springdatarestreactadmin
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
@@ -7,5 +7,5 @@ import org.springframework.boot.runApplication
 class SpringDataRestReactAdminApplication
 
 fun main(args: Array<String>) {
-	runApplication<SpringDataRestReactAdminApplication>(*args)
+    runApplication<SpringDataRestReactAdminApplication>(*args)
 }
