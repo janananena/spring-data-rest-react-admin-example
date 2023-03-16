@@ -1,34 +1,21 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import {Admin, fetchUtils, ListGuesser, Resource} from "react-admin";
+// @ts-ignore
+import jsonHalRestProvider from 'ra-data-json-hal';
+import {authProvider} from "./authProvider";
+import {Dashboard} from "./Dashboard";
+import * as ra_core from "ra-core";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+const httpClient = (url: string, options = {} as ra_core.Options) => {
+    options.credentials = "include";
+    return fetchUtils.fetchJson(url, options);
 }
 
-export default App
+const apiUrl = 'http://localhost:5173/api';
+const dataProvider = jsonHalRestProvider(apiUrl, httpClient);
+
+const App = () =>
+    <Admin authProvider={authProvider} dataProvider={dataProvider} dashboard={Dashboard} requireAuth>
+        <Resource name="testEntities" list={ListGuesser}/>
+    </Admin>;
+
+export default App;
